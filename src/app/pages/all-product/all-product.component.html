@@ -1,0 +1,13 @@
+<!-- all-product.component.html -->
+<div>
+  <button (click)="getAllProducts()">GetAllProduct</button>
+</div>
+
+<div *ngFor="let product of products">
+  <h2>{{ product.name }}</h2>
+  <p>{{ product.img }}</p>
+  <p>{{ product.descriptions}}</p>
+  <p>Stok: {{ product.stock}}</p>
+  <p>Price: {{ product.price }}</p>
+</div>
+
