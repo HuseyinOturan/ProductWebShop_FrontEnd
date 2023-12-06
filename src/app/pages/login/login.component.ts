@@ -1,7 +1,10 @@
 import {Component, Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {AuthService} from "../../service/AuthService";
 import {Router} from "@angular/router";
+import {BehaviorSubject} from "rxjs";
+import {User} from "../../interface/User";
+import {getXHRResponse} from "rxjs/internal/ajax/getXHRResponse";
+import {HttpClient} from "@angular/common/http";
+import {LoginRequest} from "../../interface/LoginRequest";
 
 @Component({
   selector: 'app-login',
@@ -14,23 +17,33 @@ import {Router} from "@angular/router";
 })
 export class LoginComponent {
 
-  loginRequest = { email: '', password: '' };
+  public loggedIn =false;
+  currentUser : User | null=null;
+  public email : string= '';
+  public password : string ='';
+  constructor(private http : HttpClient) {}
+   login() {
 
-  constructor(private authService: AuthService) {}
+    const loginData : LoginRequest ={email : this.email, password : this.password}
 
-  login(): void {
-    this.authService.loginUser(this.loginRequest).subscribe(
-      (response) => {
-        // Başarılı giriş işlemleri
-        console.log('Login successful', response);
-        // İsteğe bağlı olarak başka işlemler eklenebilir, örneğin yönlendirme (routing)
+     const url = 'http://localhost:8080/authController/loginUser';
+
+    let loginAttempt = this.http.post<User>(url, loginData);
+    loginAttempt.subscribe(
+      (user) => {
+        console.log("user inlogged")
+        this.loggedIn= true;
+        this.currentUser= user;
+        localStorage.setItem('currenUser' , JSON.stringify(this.currentUser));
       },
-      (error) => {
-        // Hata durumları
-        console.error('Login error', error);
-        // Hata durumlarına göre kullanıcıya uygun mesajları göstermek veya diğer işlemleri yapmak mümkün
+      error => {
+        console.error('loggin failed');
       }
-    );
+      );
   }
-
+  logout(){
+    this.loggedIn=false;
+    this.currentUser=null;
+    localStorage.removeItem('currentUser')
+  }
 }

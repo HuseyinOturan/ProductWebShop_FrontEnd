@@ -1,17 +1,21 @@
-<div>
-  <label>Email</label>
-  <br>
-  <input type="text" name="email" [(ngModel)]="loginRequest.email">
-  <br>
+<!-- login.component.html -->
+<div *ngIf="!loggedIn; else logoutTemplate">
+  <h2>Login</h2>
+  <form (submit)="login()">
+    <label for="email">Email:</label>
+    <input type="email" id="email" [(ngModel)]="email" required>
 
-  <label>password</label>
-  <br>
-  <input type="text" name="password" [(ngModel)]="loginRequest.password">
-  <br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" [(ngModel)]="password" required>
 
-  <button (click)="login()">Login</button>
-
+    <button type="submit">Login</button>
+  </form>
 </div>
+<ng-template #logoutTemplate>
+  <h2>Hello, {{ currentUser.email }}!</h2>
+  <button (click)="logout()">Logout</button>
+</ng-template>
+
 
 
 
