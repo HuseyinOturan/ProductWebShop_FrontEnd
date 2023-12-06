@@ -1,6 +1,8 @@
 import {Injectable} from "@angular/core";
 import {ApiService} from "./api.service";
 import {DataService} from "./dataService";
+import {Observable} from "rxjs";
+import {Product} from "../interface/Product";
 
 @Injectable({
   providedIn : 'root'
@@ -10,14 +12,14 @@ export class ProductService{
 
   public name: string = "";
   public price: string = "";
-  public img: string ="";
+  public img: string = " ";
   public descriptions: string= "";
   public stock: number | null=null;
 
   // constructor
   constructor(
     private apiService :ApiService,
-    private dataService : DataService
+
   ) {}
 
   // addProduct
@@ -32,14 +34,9 @@ export class ProductService{
     }).subscribe()
   }
   // getAllProduct
-
-  public getAllProduct() : void {
+  public getAllProduct() : Observable<Product[]> {
     const url ="http://localhost:8080/product/getAllProduct";
-    this.apiService.get(url)
-
+    return this.apiService.getAll<Product[]>(url);
   }
-
-
-
 
 }

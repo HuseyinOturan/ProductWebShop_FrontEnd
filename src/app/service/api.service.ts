@@ -14,6 +14,11 @@ export class ApiService {
   //getters & setters
 
   //HTTP methods
+
+  getAll<T>(url: string): Observable<T> {
+    return this.http.get<T>(url);
+  }
+
   public get(url: string): Observable<any> {
     return this.http.get<any>(url);
   }

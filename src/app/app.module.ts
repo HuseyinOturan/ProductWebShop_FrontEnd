@@ -12,6 +12,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { AllProductComponent } from './pages/all-product/all-product.component';
 import { PostProductComponent } from './pages/post-product/post-product.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +21,7 @@ import { PostProductComponent } from './pages/post-product/post-product.componen
     LoginComponent,
     NavbarComponent,
     AllProductComponent,
-    PostProductComponent
+    PostProductComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,7 @@
 import {Component, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {AuthService} from "../../service/AuthService";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -12,22 +14,23 @@ import {HttpClient} from "@angular/common/http";
 })
 export class LoginComponent {
 
-  public email : string ="";
-  public password : string ="";
-  public loggedInMessage : string ="";
+  loginRequest = { email: '', password: '' };
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private authService: AuthService) {}
 
-  login(){
-    const url= "http://localhost:8080/authController/loginUser";
-
-    let loggedIn =this.http.post(url,{email:this.email,password:this.password});
-
-    loggedIn.subscribe({
-      next :() => this.loggedInMessage ="Inlogged",
-      error : () => this.loggedInMessage="Login failed"
-    })
+  login(): void {
+    this.authService.loginUser(this.loginRequest).subscribe(
+      (response) => {
+        // Başarılı giriş işlemleri
+        console.log('Login successful', response);
+        // İsteğe bağlı olarak başka işlemler eklenebilir, örneğin yönlendirme (routing)
+      },
+      (error) => {
+        // Hata durumları
+        console.error('Login error', error);
+        // Hata durumlarına göre kullanıcıya uygun mesajları göstermek veya diğer işlemleri yapmak mümkün
+      }
+    );
   }
 
 }

@@ -9,7 +9,6 @@ export class DataService {
 
   //properties
   private currentUser = new BehaviorSubject<User>({} as User);
-  private
 
 
   //constructor

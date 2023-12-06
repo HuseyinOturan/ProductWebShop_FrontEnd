@@ -1,19 +1,17 @@
 <div>
   <label>Email</label>
   <br>
-  <input type="text" name="email" [(ngModel)]="email">
+  <input type="text" name="email" [(ngModel)]="loginRequest.email">
   <br>
 
   <label>password</label>
   <br>
-  <input type="text" name="password" [(ngModel)]="password">
+  <input type="text" name="password" [(ngModel)]="loginRequest.password">
   <br>
 
   <button (click)="login()">Login</button>
 
 </div>
 
-<div>
-  {{loggedInMessage}}
-</div>
+
 
