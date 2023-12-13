@@ -22,7 +22,10 @@ export class RegisterComponent {
     const url = "http://localhost:8080/authController/register"
     let loggedIn = this.http.post(url, { email: this.email, password: this.password});
     loggedIn.subscribe({
-      next: () => this.result = "Registration OK",
+      next: (response:any) => {
+        this.result = "Registration OK";
+        localStorage.setItem("userId", response?.id);
+      },
       error: () => this.result = "Registration failed"
     });
   }

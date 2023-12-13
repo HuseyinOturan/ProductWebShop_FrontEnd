@@ -5,6 +5,7 @@ import {LoginComponent} from "./pages/login/login.component";
 import {RegisterComponent} from "./pages/register/register.component";
 import {AllProductComponent} from "./pages/all-product/all-product.component";
 import {PostProductComponent} from "./pages/post-product/post-product.component";
+import {UserPageComponent} from "./pages/user-page/user-page.component";
 
 
 
@@ -15,6 +16,8 @@ const routes: Routes = [
   {path:"register", component:RegisterComponent},
   {path : "allProducts", component :AllProductComponent},
   {path : "postProduct", component: PostProductComponent},
+  {path : "user-page", component : UserPageComponent},
+  {path : '', redirectTo : '/login', pathMatch : 'full'}
 
 ];
 

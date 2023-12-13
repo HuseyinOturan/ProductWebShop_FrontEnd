@@ -1,10 +1,7 @@
 import {Component, Injectable} from '@angular/core';
-import {Router} from "@angular/router";
-import {BehaviorSubject} from "rxjs";
-import {User} from "../../interface/User";
-import {getXHRResponse} from "rxjs/internal/ajax/getXHRResponse";
 import {HttpClient} from "@angular/common/http";
-import {LoginRequest} from "../../interface/LoginRequest";
+import {LoginResponse} from "../../interface/LoginResponse";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -17,33 +14,35 @@ import {LoginRequest} from "../../interface/LoginRequest";
 })
 export class LoginComponent {
 
-  public loggedIn =false;
-  currentUser : User | null=null;
   public email : string= '';
-  public password : string ='';
-  constructor(private http : HttpClient) {}
+  public password : string =''
+  public loggedInMessage : string= '';
+
+  get currentUser(): LoginResponse | null {
+    const userJson = localStorage.getItem('currentUser');
+    return userJson ? JSON.parse(userJson) : null;
+  }
+  constructor(private http : HttpClient , private router: Router) {}
    login() {
-
-    const loginData : LoginRequest ={email : this.email, password : this.password}
-
      const url = 'http://localhost:8080/authController/loginUser';
+     let response= this.http.post<LoginResponse>(url,{email : this.email, password: this.password})
 
-    let loginAttempt = this.http.post<User>(url, loginData);
-    loginAttempt.subscribe(
-      (user) => {
-        console.log("user inlogged")
-        this.loggedIn= true;
-        this.currentUser= user;
-        localStorage.setItem('currenUser' , JSON.stringify(this.currentUser));
-      },
-      error => {
-        console.error('loggin failed');
-      }
-      );
+     response.subscribe({
+       next :(resp : LoginResponse)=> {
+         this.loggedInMessage = `Welcome ${resp.email}!`;
+         localStorage.setItem('currentUser', JSON.stringify(resp));
+         this.router.navigate(['/user-page'])
+
+       },
+       error :() => this.loggedInMessage ="Login failed!"
+     })
   }
-  logout(){
-    this.loggedIn=false;
-    this.currentUser=null;
-    localStorage.removeItem('currentUser')
+
+  logout() {
+
+    localStorage.removeItem('currentUser');
+    this.loggedInMessage = 'logout is correct';
   }
+
+
 }

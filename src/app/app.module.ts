@@ -11,6 +11,9 @@ import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { AllProductComponent } from './pages/all-product/all-product.component';
 import { PostProductComponent } from './pages/post-product/post-product.component';
+import { UserPageComponent } from './pages/user-page/user-page.component';
+import { AllOrderComponent } from './pages/all-order/all-order.component';
+import { DeleteProductComponent } from './pages/delete-product/delete-product.component';
 
 
 @NgModule({
@@ -22,6 +25,9 @@ import { PostProductComponent } from './pages/post-product/post-product.componen
     NavbarComponent,
     AllProductComponent,
     PostProductComponent,
+    UserPageComponent,
+    AllOrderComponent,
+    DeleteProductComponent,
   ],
   imports: [
     BrowserModule,

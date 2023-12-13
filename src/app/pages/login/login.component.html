@@ -1,20 +1,31 @@
-<!-- login.component.html -->
-<div *ngIf="!loggedIn; else logoutTemplate">
-  <h2>Login</h2>
-  <form (submit)="login()">
-    <label for="email">Email:</label>
-    <input type="email" id="email" [(ngModel)]="email" required>
+<div>
+  <label>Email</label>
+  <br>
+  <input type="text" name="email" [(ngModel)]="email">
+  <br>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" [(ngModel)]="password" required>
+  <label>password</label>
+  <br>
+  <input type="text" name="password" [(ngModel)]="password">
+  <br>
 
-    <button type="submit">Login</button>
-  </form>
-</div>
-<ng-template #logoutTemplate>
-  <h2>Hello, {{ currentUser.email }}!</h2>
+  <button (click)="login()">Login</button>
   <button (click)="logout()">Logout</button>
-</ng-template>
+
+</div>
+<div>
+  {{loggedInMessage}}
+</div>
+
+<div *ngIf="currentUser">
+  <h2>Current User Information</h2>
+  <p>Email: {{currentUser.email}}</p>
+  <!-- Add other user information as needed -->
+</div>
+<div *ngIf="!currentUser">
+  <p>No current user logged in.</p>
+</div>
+
 
 
 

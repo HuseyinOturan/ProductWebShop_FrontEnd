@@ -1,0 +1,41 @@
+<!-- user-page.component.html -->
+
+<div>
+
+
+
+  <ul>
+    <li *ngFor="let product of products">
+      {{ product.id }} - {{ product.price }}- {{product.name}}
+      <input type="number" [(ngModel)]="quantity" placeholder="Quantity" />
+      <button (click)="addToOrder(product, quantity)">Add to Order</button>
+    </li>
+  </ul>
+
+  <ul *ngIf="orderItemAppList.length > 0">
+    <li *ngFor="let orderItemApp of orderItemAppList">
+      {{ orderItemApp.productAppId }} - Quantity: {{ orderItemApp.amount }}
+    </li>
+  </ul>
+
+  <div>
+    <p *ngIf="!products.length">No products available.</p>
+    <p *ngIf="!orderItemAppList.length">No items in the order.</p>
+    <button *ngIf="orderItemAppList.length > 0" (click)="createOrder()">Place Order</button>
+    <p>{{ result }}</p>
+  </div>
+
+
+  <div>
+    <button (click)="getOrderItemByUserId()">User-Product </button>
+  </div>
+
+  <div *ngFor="let orderItemRes of orderItemResList">
+    <h2>{{ orderItemRes.productName }}</h2>
+    <p>Price: {{ orderItemRes.productPrice }}</p>
+    <p> Quantty : {{ orderItemRes.quantity}}</p>
+  </div>
+
+</div>
+
+
